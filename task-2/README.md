@@ -1,73 +1,174 @@
-# React + TypeScript + Vite
+# 🚀 Task 2 — 3D Model Viewer with Optimized Loading
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Overview
 
-Currently, two official plugins are available:
+This project is a **3D Model Viewer** built using **Three.js** that loads and renders a `.glb` model efficiently with a focus on:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* ⚡ Optimized loading
+* 🧠 Memory management
+* 📦 Reduced bundle size via lazy loading
+* 🗜️ Draco-compressed assets
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🎯 Features
 
-## Expanding the ESLint configuration
+* ✅ Loads `.glb` model using `GLTFLoader`
+* ✅ Uses `DRACOLoader` for compressed models
+* ✅ Lazy loads Three.js (reduces initial load time)
+* ✅ Displays loading indicator with progress
+* ✅ Logs model load time in milliseconds
+* ✅ Proper cleanup using `dispose()` to prevent memory leaks
+* ✅ Responsive full-screen 3D viewer
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* React (Vite)
+* Three.js
+* GLTFLoader + DRACOLoader
+* Tailwind CSS
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📁 Project Structure
+
+```
+task-2/
+│
+├── public/
+│   ├── model.glb
+│   └── model-compressed.glb
+│
+├── src/
+│   ├── App.tsx
+│   ├── ModelViewer.tsx
+│   ├── buildSceneGLB.ts
+│   ├── main.tsx
+│   └── index.css
+│
+├── NOTES.md
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
+
+## ⚙️ Setup & Run
+
+### 1. Install dependencies
+
+```
+npm install
+```
+
+### 2. Run development server
+
+```
+npm run dev
+```
+
+### 3. Open in browser
+
+```
+http://localhost:5173
+```
+
+---
+
+## 📦 Model Optimization (Draco Compression)
+
+To compress the model:
+
+```
+npx gltf-pipeline -i public/model.glb -o public/model-compressed.glb --draco.compressMeshes
+```
+
+---
+
+## ⏱️ Performance Logging
+
+Model load time is measured using:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+const start = performance.now();
 ```
+
+After loading:
+
+```js
+console.log(`Model loaded in ${(performance.now() - start).toFixed(2)}ms`);
+```
+
+---
+
+## 🧠 Key Concepts Used
+
+### 1. Lazy Loading Three.js
+
+```js
+const THREE = await import('three');
+```
+
+* Prevents blocking initial render
+* Improves page load performance
+
+---
+
+### 2. Draco Compression
+
+* Reduces file size significantly
+* Faster network transfer
+* Better performance on slow connections
+
+---
+
+### 3. Memory Management
+
+* `dispose()` is used to clean up WebGL resources
+* Prevents GPU memory leaks
+
+---
+
+### 4. Loading UX
+
+* Progress indicator shown while model loads
+* Improves user experience
+
+---
+
+## 📄 Notes
+
+Detailed explanation available in:
+
+```
+NOTES.md
+```
+
+---
+
+## ✅ Requirements Checklist
+
+* ✔️ GLB model rendered in browser
+* ✔️ Draco compression applied
+* ✔️ GLTFLoader + DRACOLoader used
+* ✔️ Loading indicator implemented
+* ✔️ Load time logged
+* ✔️ Three.js lazy loaded
+* ✔️ Memory cleanup handled
+
+---
+
+## 🎉 Conclusion
+
+This project demonstrates how to build a performant 3D viewer by combining:
+
+* Efficient asset compression
+* Lazy loading strategies
+* Proper GPU memory management
+
+---
+
+## 👨‍💻 Author
+
+Yash
