@@ -116,7 +116,7 @@ const App: React.FC = () => {
           validateOnChange={true}
           validateOnBlur={false}
         >
-          {({ isValid, dirty, values, errors, submitCount }) => {
+          {({ dirty, values, errors, submitCount }) => {
             const allFilled = Object.values(values).every((v) => v.trim() !== '')
             const noErrors = Object.keys(errors).length === 0
             const formComplete = allFilled && noErrors && dirty
